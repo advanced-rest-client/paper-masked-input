@@ -37,12 +37,12 @@
     "web-component-tester": "^4.0.0"
   },
   "ignore": [
-    ".editorconfig",
-    ".gitattributes",
-    ".gitignore",
-    ".jsbeautifyrc",
-    ".jscsrc",
-    ".jshintrc"
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "tasks"
   ],
   "version": "1.0.1"
 }
