@@ -32,13 +32,68 @@ the License.
       <paper-masked-input></paper-masked-input>
     </template>
   </test-fixture>
+  <test-fixture id="visible">
+    <template>
+      <paper-masked-input visible></paper-masked-input>
+    </template>
+  </test-fixture>
+  <test-fixture id="error">
+    <template>
+      <paper-masked-input auto-validate pattern="[0-9]*" value="foobar" error-message="error"></paper-masked-input>
+    </template>
+  </test-fixture>
   <script>
   suite('basic', function() {
+
+    test('Initial visibility state is off', function() {
+      var input = fixture('basic');
+      assert.equal(input.visible, false, 'input.visible equals false');
+    });
+
+    test('Setting visibility shows the password', function() {
+      var input = fixture('basic');
+      input.visible = true;
+      assert.equal(input.inputElement.type, 'text', 'inputElement.type equals text');
+    });
+
     test('setting value sets the input value', function() {
       var input = fixture('basic');
       input.value = 'foobar';
       assert.equal(input.inputElement.value, input.value, 'inputElement.value equals input.value');
     });
+
+    test('clear the input value', function() {
+      var input = fixture('basic');
+      input.value = 'foobar';
+      assert.equal(input.inputElement.value, input.value, 'inputElement.value equals input.value');
+      input.clear();
+      assert.equal(input.inputElement.value, '', 'inputElement.value equals ""');
+    });
+
+    test('Default visibility icon is `visibility`', function() {
+      var input = fixture('basic');
+      assert.equal(input.icon, 'arc:visibility', 'input.icon equals arc:visibility');
+    });
+
+    test('Changing visibility icon changes', function() {
+      var input = fixture('basic');
+      input.visible = true;
+      assert.equal(input.icon, 'arc:visibility-off', 'input.icon equals arc:visibility-off');
+    });
+
+    test('Initial visibility state is on for visible attribute.', function() {
+      var input = fixture('visible');
+      assert.equal(input.visible, true, 'input.visible equals true');
+    });
+
+    // Data binding
+    test('error message is displayed (data binding)', function() {
+        var input = fixture('error');
+        forceXIfStamp(input);
+        var error = Polymer.dom(input.inputElement.root).querySelector('paper-input-error');
+        assert.ok(error, 'paper-input-error exists');
+        assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
+      });
   });
   </script>
 </body>

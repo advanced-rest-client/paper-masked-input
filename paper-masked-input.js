@@ -167,6 +167,6 @@ Polymer({
   },
 
   get inputElement() {
-    return this.$.input.inputElement;
+    return this.$.input;
   }
 });
