@@ -1,4 +1,3 @@
-# `<paper-masked-input>`
 
 Material design: [Text fields](https://www.google.com/design/spec/components/text-fields.html)
 
@@ -16,3 +15,4 @@ To focus a paper-masked-input, you can call the native `focus()` method as long 
 
 ### Styling
 See `Polymer.PaperInputContainer` for a list of custom properties used to style this element.
+
