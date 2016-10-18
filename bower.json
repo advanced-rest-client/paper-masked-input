@@ -8,9 +8,12 @@
     "web-components",
     "polymer",
     "input",
-    "password"
+    "password",
+    "material design",
+    "paper elements"
   ],
-  "private": true,
+  "license": "Apache-2.0 OR CC-BY-4.0",
+  "private": false,
   "main": [
     "paper-masked-input.html"
   ],
