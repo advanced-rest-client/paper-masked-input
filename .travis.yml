@@ -1,18 +1,26 @@
 language: node_js
 sudo: required
-before_script:
-- npm install -g bower polylint web-component-tester
-- bower install
-- polylint
+dist: trusty
 node_js: stable
+before_script:
+- npm install --silent bower polymer-cli
+- bower install --silent
 addons:
-  firefox: '46.0'
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable
   sauce_connect: true
 script:
-- xvfb-run wct
-dist: trusty
+- npm run lint
+- node_modules/.bin/polymer test --plugin sauce --job-name "paper-masked-input:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}
+cache:
+  directories:
+  - bower_components
+  - node_modules
+branches:
+  only:
+    - stage
+    - develop
+after_success:
+  - node tasks/ci.js
+env:
+  global:
+  - secure: A8nCmzARzxgScaylKiPi87SaXPdanPUBKLbF0Uh84q3pseKbRTbGKTHlzT3PJIHoEuzJ/4LIDrZKapdRfszu8iCsplnLZWFElOGN9I3dfOehmNbV+mR6FpNmBSzrv6mxMf83X6XklzFmADGtBqovejfPZotJJNzc/GkjHBC1Y3csA8BmVdwxk77o2aKYpXde2BUyMd7k9oy9w9aevGSiq4mMXVHZIxd4K+BTtinAqwz1kABFRBYCSy5U3KdFVPQBX9IZcCS4JsezY4v5S+ZJjb6aeH7V+NKyI2xjZhdzRpRw9JGC0zH6bvKTYNsjPTnXfnHwpUWi2v47sOi7D1ygW9XpQ+tdmB7rzis6P+JoFkAvRCf/S/+Y/I55/SgqTMOiOnCdm7BBIOzf9ADO4Pakq1Wgp+VEtIDRvh4nzQJgAUVMNuwdAlLXRuVBs1hQy/g4Y5UQ1ZJ+K+LbqfEcb6THTjXoZ3qDvmWholcqmH0ow6GHvmWo+2IoCNz4cbdVIzVsfOuinTeiIBEijm1rqmJ8ampVxtOuxv2TJ8emE12cJHn7AAUVkWondkwkYFHNkOE6GNrl2Km3XyeGLMyS3HJqRmg6Lqpgo+7PW8kErbXPxyKc3ljIhYWH1irXFW5FoHE3ESTcyojf6+F1dnmdAxqBBOdmZswXyAc0l9RudOnHNqg=
+  - secure: GQBPbR83paPwOQeSUEYntWDKJviTd/aNLWMAjmmqhSTX3AD63zu3dyBBRWqsVGKxSKrMFrtjwVNB146wf3Gn6iG9dJ38+ujL75n58ovswuoEko7KK0d+dZ36LvVVsg6NUh5DEthR0ZEpWx44WBAcXHbivSm7zK7w8wgROozZATzDDiNLvl1kFOwXdKn0bZF2iDwLlkokWK77DMiASYuiN6J8ZzTUqe48JfM/GtEEIEA+5wrOBkBu9xJ9Tv5hJJLaT5xKfOKNsLWlYSEce2IV8B1Vs9qv0SaNBRPaUzs8c+hcsA+v3nHbc4hOJoflMpqtyneMGdrGJ1WgY604rktqHPS9IKw/AxzUclzkK2IWQpPhfKCbaKQ6N78ImFTf4KrmcZC2hYaE+AdGhj08ekNDKyQiliwmf3YouQItAcP5Dd/2FQBNXXy1LfmIgcfB0PZxirfLM6yqnXak6X0NAcxqKDNFhLZbTpBqSS1TE0pHyLZYP4OId0svq/xN4RHwL8jl4nXNm32hK8DhADEmryROCX1gjpx0Z8YCM8S3HSmS2irdwLZZGpYXpveWWqf0HvieIYcCmsiGdkuYyyomijl1qcBg45rFDdoTc6OMNItq4UrTBwN04VeBTZ/e+cmtEE4cBSk+cKTiIpujwFmrpmdqSRJrOe7ViroaVm553kmGDKI=
