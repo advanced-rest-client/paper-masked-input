@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/advanced-rest-client/paper-masked-input.svg?branch=master)](https://travis-ci.org/advanced-rest-client/paper-masked-input)  [![Dependency Status](https://dependencyci.com/github/advanced-rest-client/paper-masked-input/badge)](https://dependencyci.com/github/advanced-rest-client/paper-masked-input)  
+
+# paper-masked-input
 
 Material design: [Text fields](https://www.google.com/design/spec/components/text-fields.html)
 
