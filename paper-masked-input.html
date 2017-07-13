@@ -14,6 +14,7 @@ the License.
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../arc-icons/arc-icons.html">
 <!--
 Material design: [Text fields](https://www.google.com/design/spec/components/text-fields.html)
@@ -41,20 +42,58 @@ See `Polymer.PaperInputContainer` for a list of custom properties used to style 
 <dom-module id="paper-masked-input">
   <template>
     <style>
-     :host {
+    :host {
       display: block;
     }
 
-     :host([disabled]) {
+    :host([disabled]) {
       pointer-events: none;
       outline: none;
       @apply(--paper-masked-input-disabled);
     }
+
+    .action-icon {
+      color: var(--content-action-button-color, rgba(0, 0, 0, 0.74));
+      transition: color 0.25s linear;
+    }
+
+    .action-icon:hover {
+      color: var(--content-action-button-color-hover, var(--accent-color, rgba(0, 0, 0, 0.74)));
+    }
     </style>
-    <paper-input label="[[label]]" type="[[type]]" value="{{value}}" error-message="[[errorMessage]]" invalid="{{invalid}}" prevent-invalid-input="[[preventInvalidInput]]" allowed-pattern="[[allowedPattern]]" validator="[[validator]]" pattern$="[[pattern]]" autocomplete$="[[autocomplete]]" required$="[[required]]" autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" minlength$="[[minlength]]" maxlength$="[[maxlength]]" name$="[[name]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]" size$="[[size]]" autocapitalize$="[[autocapitalize]]" autocorrect$="[[autocorrect]]" tabindex$="[[tabindex]]" disabled$="[[disabled]]" no-label-float="[[noLabelFloat]]" always-float-label="[[alwaysFloatLabel]]" auto-validate$="[[autoValidate]]" id="input">
-      <paper-icon-button suffix on-tap="toggle" icon="[[icon]]" alt="[[alt]]" title$="[[title]]" disabled$="[[disabled]]"></paper-icon-button>
-      <paper-icon-button suffix on-tap="clear" icon="arc:clear" alt="Clear input icon" title="Clear input" disabled$="[[disabled]]"></paper-icon-button>
+    <paper-input
+      label="[[label]]"
+      type="[[_computeInputType(visible)]]"
+      value="{{value}}"
+      error-message="[[errorMessage]]"
+      invalid="{{invalid}}"
+      prevent-invalid-input="[[preventInvalidInput]]"
+      allowed-pattern="[[allowedPattern]]"
+      validator="[[validator]]"
+      pattern$="[[pattern]]"
+      autocomplete$="[[autocomplete]]"
+      required$="[[required]]"
+      autofocus$="[[autofocus]]"
+      inputmode$="[[inputmode]]"
+      minlength$="[[minlength]]"
+      maxlength$="[[maxlength]]"
+      name$="[[name]]"
+      placeholder$="[[placeholder]]"
+      readonly$="[[readonly]]"
+      size$="[[size]]"
+      autocapitalize$="[[autocapitalize]]"
+      autocorrect$="[[autocorrect]]"
+      tabindex="0"
+      disabled$="[[disabled]]"
+      no-label-float="[[noLabelFloat]]"
+      always-float-label="[[alwaysFloatLabel]]"
+      auto-validate$="[[autoValidate]]"
+      id="input">
+      <paper-icon-button id="toggleButton" suffix on-tap="toggle" class="action-icon" icon="[[_computeToggleIcon(visible)]]" alt="Toggle icon" disabled$="[[disabled]]"></paper-icon-button>
+      <paper-icon-button id="clearButton" suffix on-tap="clear" class="action-icon" icon="arc:clear" alt="Clear input icon" title="Clear input" disabled$="[[disabled]]"></paper-icon-button>
     </paper-input>
+    <paper-tooltip for="toggleButton" animation-delay="200">[[_computeToggleLabel(visible)]]</paper-tooltip>
+    <paper-tooltip for="clearButton" animation-delay="200">Clear input</paper-tooltip>
   </template>
   <script>
   Polymer({
@@ -70,6 +109,7 @@ See `Polymer.PaperInputContainer` for a list of custom properties used to style 
         type: String,
         notify: true
       },
+
       // Set to true to show the text in the input field.
       visible: {
         type: Boolean,
@@ -77,31 +117,12 @@ See `Polymer.PaperInputContainer` for a list of custom properties used to style 
         notify: true
       },
 
-      // Icon name to display
-      icon: {
-        type: String,
-        value: 'arc:visibility',
-        readOnly: true
-      },
-
-      // Current input field type
+      /**
+       * Default input type if password is disabled.
+       */
       type: {
         type: String,
-        value: 'password',
-        readOnly: true
-      },
-
-      // Icon's alt label
-      alt: {
-        type: String,
-        computed: '_computeAlt(title)'
-      },
-
-      // Icon's title label
-      title: {
-        type: String,
-        value: 'Show password',
-        readOnly: true
+        value: 'text'
       },
       // The error message to display when the input is invalid.
       errorMessage: String,
@@ -189,31 +210,24 @@ See `Polymer.PaperInputContainer` for a list of custom properties used to style 
     },
 
     hostAttributes: {
-      tabindex: 0
+      tabindex: -1
     },
 
-    observers: [
-      '_visibleChanged(visible)'
-    ],
     // Toggle password visibility.
     toggle: function() {
       this.set('visible', !this.visible);
     },
 
-    _visibleChanged: function(visible) {
-      if (visible) {
-        this._setType('text');
-        this._setIcon('arc:visibility-off');
-        this._setTitle('Hide password');
-      } else {
-        this._setType('password');
-        this._setIcon('arc:visibility');
-        this._setTitle('Show password');
-      }
+    _computeToggleLabel: function(visible) {
+      return visible ? 'Hide password' : 'Show password';
     },
 
-    _computeAlt: function(title) {
-      return title + ' icon';
+    _computeToggleIcon: function(visible) {
+      return visible ? 'arc:visibility-off' : 'arc:visibility';
+    },
+
+    _computeInputType: function(visible) {
+      return visible ? this.type : 'password';
     },
 
     // Clears the value of the field.
