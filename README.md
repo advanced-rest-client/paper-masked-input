@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/advanced-rest-client/paper-masked-input.svg?branch=master)](https://travis-ci.org/advanced-rest-client/paper-masked-input)  [![Dependency Status](https://dependencyci.com/github/advanced-rest-client/paper-masked-input/badge)](https://dependencyci.com/github/advanced-rest-client/paper-masked-input)  
+[![Build Status](https://travis-ci.org/advanced-rest-client/paper-masked-input.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/paper-masked-input)  
 
 # paper-masked-input
 
