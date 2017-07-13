@@ -43,27 +43,28 @@ the License.
     </template>
   </test-fixture>
   <script>
+  /* global fixture, assert, TestHelpers */
   suite('basic', function() {
+    var input;
+    setup(function() {
+      input = fixture('basic');
+    });
 
     test('Initial visibility state is off', function() {
-      var input = fixture('basic');
-      assert.equal(input.visible, false, 'input.visible equals false');
+      assert.equal(input.visible, false);
     });
 
     test('Setting visibility shows the password', function() {
-      var input = fixture('basic');
       input.visible = true;
-      assert.equal(input.inputElement.type, 'text', 'inputElement.type equals text');
+      assert.equal(input.inputElement.type, 'text');
     });
 
     test('setting value sets the input value', function() {
-      var input = fixture('basic');
       input.value = 'foobar';
-      assert.equal(input.inputElement.value, input.value, 'inputElement.value equals input.value');
+      assert.equal(input.inputElement.value, input.value);
     });
 
     test('clear the input value', function() {
-      var input = fixture('basic');
       input.value = 'foobar';
       assert.equal(input.inputElement.value, input.value, 'inputElement.value equals input.value');
       input.clear();
@@ -71,29 +72,47 @@ the License.
     });
 
     test('Default visibility icon is `visibility`', function() {
-      var input = fixture('basic');
-      assert.equal(input.icon, 'arc:visibility', 'input.icon equals arc:visibility');
+      var button = Polymer.dom(input.root).querySelector('#toggleButton');
+      assert.equal(button.icon, 'arc:visibility');
     });
 
     test('Changing visibility icon changes', function() {
-      var input = fixture('basic');
+      var button = Polymer.dom(input.root).querySelector('#toggleButton');
       input.visible = true;
-      assert.equal(input.icon, 'arc:visibility-off', 'input.icon equals arc:visibility-off');
+      assert.equal(button.icon, 'arc:visibility-off');
     });
 
-    test('Initial visibility state is on for visible attribute.', function() {
-      var input = fixture('visible');
-      assert.equal(input.visible, true, 'input.visible equals true');
+  });
+
+  suite('visible by default', function() {
+    var input;
+    setup(function() {
+      input = fixture('visible');
+    });
+
+    test('Initial visibility state is on', function() {
+      assert.equal(input.visible, true);
+    });
+
+    test('Default visibility icon is `visibility-off`', function() {
+      var button = Polymer.dom(input.root).querySelector('#toggleButton');
+      assert.equal(button.icon, 'arc:visibility-off');
+    });
+  });
+
+  suite('Validation', function() {
+    var input;
+    setup(function() {
+      input = fixture('error');
     });
 
     // Data binding
     test('error message is displayed (data binding)', function() {
-        var input = fixture('error');
-        forceXIfStamp(input);
-        var error = Polymer.dom(input.inputElement.root).querySelector('paper-input-error');
-        assert.ok(error, 'paper-input-error exists');
-        assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
-      });
+      TestHelpers.forceXIfStamp(input);
+      var error = Polymer.dom(input.inputElement.root).querySelector('paper-input-error');
+      assert.ok(error, 'paper-input-error exists');
+      assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
+    });
   });
   </script>
 </body>
