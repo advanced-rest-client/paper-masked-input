@@ -1,21 +1,26 @@
 {
-  "name": "paper-masked-input",
-  "version": "1.0.7",
-  "license": "Apache-2.0 OR CC-BY-4.0",
+  "name": "@arc-components/paper-masked-input",
+  "version": "2.0.0-preview",
+  "license": "Apache-2.0",
   "description": "Material design password field",
   "devDependencies": {
-    "polymer-cli": "^1.2.0"
+    "@polymer/gen-typescript-declarations": "^1.1.1",
+    "bower": "^1.8.0"
   },
   "scripts": {
-    "serve": "node_modules/.bin/polymer serve",
     "lint": "node_modules/.bin/polymer lint paper-masked-input.html",
     "test-sauce": "node_modules/.bin/polymer test --plugin sauce --job-name \"paper-masked-input:local-test\"",
     "test": "node_modules/.bin/polymer test --plugin local",
-    "deps": "npm install --quiet && bower install --quiet",
-    "update-deps": "npm update --quiet && bower update --quiet"
+    "update-types": "gen-typescript-declarations --deleteExisting --outDir ."
   },
   "private": false,
-  "main": [
-    "paper-masked-input.html"
-  ]
+  "main": "paper-masked-input.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/advanced-rest-client/paper-masked-input.git"
+  },
+  "bugs": {
+    "url": "https://github.com/advanced-rest-client/paper-masked-input/issues",
+    "email": "arc@mulesoft.com"
+  }
 }
