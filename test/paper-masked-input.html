@@ -35,7 +35,7 @@ the License.
       <paper-masked-input visible></paper-masked-input>
     </template>
   </test-fixture>
-  <test-fixture id="error">
+  <test-fixture id="errorred">
     <template>
       <paper-masked-input auto-validate pattern="[0-9]*" value="foobar" error-message="error"></paper-masked-input>
     </template>
@@ -101,7 +101,7 @@ the License.
   suite('Validation', () => {
     let input;
     setup(function() {
-      input = fixture('error');
+      input = fixture('errorred');
     });
 
     // Data binding
