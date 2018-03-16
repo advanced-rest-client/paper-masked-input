@@ -1,23 +1,27 @@
 language: node_js
-dist: trusty
 node_js: stable
+sudo: required
 before_script:
-- npm install --silent bower polymer-cli
-- bower install --silent
+- npm install -g polymer-cli
+- polymer install --variants
 addons:
+  firefox: latest
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
   sauce_connect: true
 script:
-- npm run lint
-- node_modules/.bin/polymer test --plugin sauce --job-name "paper-masked-input:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}
+- polymer lint paper-masked-input.html
+- xvfb-run polymer test polymer test --plugin local
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test --plugin sauce --job-name
+  "paper-masked-input:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}; fi
 cache:
   directories:
   - node_modules
-branches:
-  only:
-    - stage
-    - develop
 after_success:
-  - node tasks/ci.js
+- node tasks/ci.js
 env:
   global:
   - secure: A8nCmzARzxgScaylKiPi87SaXPdanPUBKLbF0Uh84q3pseKbRTbGKTHlzT3PJIHoEuzJ/4LIDrZKapdRfszu8iCsplnLZWFElOGN9I3dfOehmNbV+mR6FpNmBSzrv6mxMf83X6XklzFmADGtBqovejfPZotJJNzc/GkjHBC1Y3csA8BmVdwxk77o2aKYpXde2BUyMd7k9oy9w9aevGSiq4mMXVHZIxd4K+BTtinAqwz1kABFRBYCSy5U3KdFVPQBX9IZcCS4JsezY4v5S+ZJjb6aeH7V+NKyI2xjZhdzRpRw9JGC0zH6bvKTYNsjPTnXfnHwpUWi2v47sOi7D1ygW9XpQ+tdmB7rzis6P+JoFkAvRCf/S/+Y/I55/SgqTMOiOnCdm7BBIOzf9ADO4Pakq1Wgp+VEtIDRvh4nzQJgAUVMNuwdAlLXRuVBs1hQy/g4Y5UQ1ZJ+K+LbqfEcb6THTjXoZ3qDvmWholcqmH0ow6GHvmWo+2IoCNz4cbdVIzVsfOuinTeiIBEijm1rqmJ8ampVxtOuxv2TJ8emE12cJHn7AAUVkWondkwkYFHNkOE6GNrl2Km3XyeGLMyS3HJqRmg6Lqpgo+7PW8kErbXPxyKc3ljIhYWH1irXFW5FoHE3ESTcyojf6+F1dnmdAxqBBOdmZswXyAc0l9RudOnHNqg=
