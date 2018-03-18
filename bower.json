@@ -1,6 +1,6 @@
 {
   "name": "paper-masked-input",
-  "version": "2.0.0-preview",
+  "version": "2.0.0",
   "description": "Material design password field",
   "license": "Apache-2.0",
   "authors": [
