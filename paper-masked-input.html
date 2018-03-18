@@ -247,9 +247,13 @@ the License.
     clear() {
       this.set('value', '');
     }
-
+    /**
+     * Validated thre input.
+     *
+     * @return {Boolean} True if the control is valid.
+     */
     validate() {
-      this.inputElement.validate();
+      return this.inputElement.validate();
     }
 
     get inputElement() {
