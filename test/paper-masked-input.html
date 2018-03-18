@@ -40,6 +40,13 @@ the License.
       <paper-masked-input auto-validate pattern="[0-9]*" value="foobar" error-message="error"></paper-masked-input>
     </template>
   </test-fixture>
+
+  <test-fixture id="invalid">
+    <template>
+      <paper-masked-input auto-validate required></paper-masked-input>
+    </template>
+  </test-fixture>
+
   <script>
   suite('basic', () => {
     let input;
@@ -99,13 +106,29 @@ the License.
   });
 
   suite('Validation', () => {
-    let input;
-    setup(function() {
-      input = fixture('errorred');
+
+    test('validate() returns false', (done) => {
+      const input = fixture('invalid');
+      flush(() => {
+        const result = input.validate();
+        assert.isFalse(result);
+        done();
+      });
+    });
+
+    test('validate() returns true for valid input', (done) => {
+      const input = fixture('invalid');
+      flush(() => {
+        input.value = 'test';
+        const result = input.validate();
+        assert.isTrue(result);
+        done();
+      });
     });
 
     // Data binding
     test('error message is displayed (data binding)', function(done) {
+      const input = fixture('errorred');
       flush(() => {
         const error = Polymer.dom(input.inputElement.root).querySelector('paper-input-error');
         assert.ok(error, 'paper-input-error exists');
