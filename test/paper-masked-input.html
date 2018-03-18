@@ -21,8 +21,6 @@ the License.
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
-  <script src="../../iron-test-helpers/test-helpers.js"></script>
-  <script src="../../iron-test-helpers/mock-interactions.js"></script>
   <link rel="import" href="../paper-masked-input.html">
 </head>
 
@@ -37,81 +35,83 @@ the License.
       <paper-masked-input visible></paper-masked-input>
     </template>
   </test-fixture>
-  <test-fixture id="error">
+  <test-fixture id="errorred">
     <template>
       <paper-masked-input auto-validate pattern="[0-9]*" value="foobar" error-message="error"></paper-masked-input>
     </template>
   </test-fixture>
   <script>
-  /* global fixture, assert, TestHelpers */
-  suite('basic', function() {
-    var input;
-    setup(function() {
+  suite('basic', () => {
+    let input;
+    setup(() => {
       input = fixture('basic');
     });
 
-    test('Initial visibility state is off', function() {
+    test('Initial visibility state is off', () => {
       assert.equal(input.visible, false);
     });
 
-    test('Setting visibility shows the password', function() {
+    test('Setting visibility shows the password', () => {
       input.visible = true;
       assert.equal(input.inputElement.type, 'text');
     });
 
-    test('setting value sets the input value', function() {
+    test('setting value sets the input value', () => {
       input.value = 'foobar';
       assert.equal(input.inputElement.value, input.value);
     });
 
-    test('clear the input value', function() {
+    test('clear the input value', () => {
       input.value = 'foobar';
       assert.equal(input.inputElement.value, input.value, 'inputElement.value equals input.value');
       input.clear();
       assert.equal(input.inputElement.value, '', 'inputElement.value equals ""');
     });
 
-    test('Default visibility icon is `visibility`', function() {
-      var button = Polymer.dom(input.root).querySelector('#toggleButton');
+    test('Default visibility icon is `visibility`', () => {
+      const button = Polymer.dom(input.root).querySelector('#toggleButton');
       assert.equal(button.icon, 'arc:visibility');
     });
 
-    test('Changing visibility icon changes', function() {
-      var button = Polymer.dom(input.root).querySelector('#toggleButton');
+    test('Changing visibility icon changes', () => {
+      const button = Polymer.dom(input.root).querySelector('#toggleButton');
       input.visible = true;
       assert.equal(button.icon, 'arc:visibility-off');
     });
 
+    a11ySuite('basic');
   });
 
-  suite('visible by default', function() {
-    var input;
-    setup(function() {
+  suite('visible by default', () => {
+    let input;
+    setup(() => {
       input = fixture('visible');
     });
 
-    test('Initial visibility state is on', function() {
+    test('Initial visibility state is on', () => {
       assert.equal(input.visible, true);
     });
 
-    test('Default visibility icon is `visibility-off`', function() {
-      var button = Polymer.dom(input.root).querySelector('#toggleButton');
+    test('Default visibility icon is `visibility-off`', () => {
+      const button = Polymer.dom(input.root).querySelector('#toggleButton');
       assert.equal(button.icon, 'arc:visibility-off');
     });
   });
 
-  suite('Validation', function() {
-    var input;
+  suite('Validation', () => {
+    let input;
     setup(function() {
-      input = fixture('error');
+      input = fixture('errorred');
     });
 
     // Data binding
-    test('error message is displayed (data binding)', function() {
-      TestHelpers.forceXIfStamp(input);
-      var error = Polymer.dom(input.inputElement.root).querySelector('paper-input-error');
-      assert.ok(error, 'paper-input-error exists');
-      assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
+    test('error message is displayed (data binding)', function(done) {
+      flush(() => {
+        const error = Polymer.dom(input.inputElement.root).querySelector('paper-input-error');
+        assert.ok(error, 'paper-input-error exists');
+        assert.notEqual(getComputedStyle(error).display, 'none', 'error is not display:none');
+        done();
+      });
     });
   });
   </script>
