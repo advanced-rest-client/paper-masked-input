@@ -189,7 +189,13 @@ declare namespace UiElements {
      * Clears the value of the field.
      */
     clear(): void;
-    validate(): void;
+
+    /**
+     * Validated thre input.
+     *
+     * @returns True if the control is valid.
+     */
+    validate(): Boolean|null;
     _disabledChanged(state: any): void;
   }
 }
