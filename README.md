@@ -1,6 +1,10 @@
 [![Build Status](https://travis-ci.org/advanced-rest-client/paper-masked-input.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/paper-masked-input)
 
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/paper-masked-input)
+  
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/advanced-rest-clientpaper-masked-input)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/advanced-rest-clientpaper-masked-input.svg)](https://vaadin.com/directory/component/advanced-rest-clientpaper-masked-input)
+
 
 ## &lt;paper-masked-input&gt;
 
