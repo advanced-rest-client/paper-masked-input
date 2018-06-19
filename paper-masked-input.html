@@ -64,8 +64,9 @@ the License.
       always-float-label="[[alwaysFloatLabel]]"
       auto-validate$="[[autoValidate]]"
       id="input">
+      <slot name="prefix" slot="prefix"></slot>
       <paper-icon-button id="toggleButton" slot="suffix" on-tap="toggle" class="action-icon" icon="[[_computeToggleIcon(visible)]]" alt="Toggle icon" disabled$="[[disabled]]" title$="[[_computeToggleLabel(visible)]]"></paper-icon-button>
-      <paper-icon-button id="clearButton" slot="suffix" on-tap="clear" class="action-icon" icon="arc:clear" alt="Clear input icon" title="Clear input" disabled$="[[disabled]]" title="Clear input"></paper-icon-button>
+      <slot name="suffix" slot="suffix"></slot>
     </paper-input>
   </template>
   <script>
@@ -83,12 +84,31 @@ the License.
    * <paper-masked-input label="Your password" error-message="Invalid password!"></paper-masked-input>
    * ```
    *
-   * The password input will rener two additional icon buttons: clear and visibility toggle.
-   * When the user toggle visibility it will change to regular text field and back.
+   * The password input reners an icon button on a suffix position to toggle
+   * password visibility.
    *
    * ### Focus
    *
    * To focus a `paper-masked-input`, you can call the native `focus()` method as long as the input has a tab index.
+   *
+   * ## New in version 2
+   *
+   * The element does not renders "clear" icon anymore. To produce similar effect
+   * ass an item with `slot="suffix"`:
+   *
+   * ```html
+   * <paper-masked-input label="Your password">
+   *  <paper-icon-button slot="suffix" onclick="this.parentElement.clear()"></paper-icon-button>
+   * </paper-masked-input>
+   * ```
+   *
+   * The element support "prefix" slot to add a content before the input.
+   *
+   * ```html
+   * <paper-masked-input label="xxx-xxx-xxxx">
+   *  <span slot="prefix">SSN</span>
+   * </paper-masked-input>
+   * ```
    *
    * ### Styling
    * See `Polymer.PaperInputContainer` for a list of custom properties used to style this element.
@@ -99,9 +119,7 @@ the License.
    * @memberof UiElements
    */
   class PaperMaskedInput extends Polymer.Element {
-    static get is() {
-      return 'paper-masked-input';
-    }
+    static get is() { return 'paper-masked-input';}
     static get properties() {
       return {
         /**
@@ -243,7 +261,9 @@ the License.
       return visible ? this.type : 'password';
     }
 
-    // Clears the value of the field.
+    /**
+     * Clears the value of the field.
+     */
     clear() {
       this.set('value', '');
     }
