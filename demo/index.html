@@ -93,6 +93,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <button onclick="validate()">Validate!</button>
       </template>
     </demo-snippet>
+
+    <h3>Can have prefix and suffix</h3>
+    <demo-snippet>
+      <template>
+        <paper-masked-input label="xxx-xxx-xxxx">
+          <span slot="prefix">SSN</span>
+          <paper-icon-button slot="suffix" icon="arc:clear" onclick="this.parentElement.clear()" title="Remove value"></paper-icon-button>
+        </paper-masked-input>
+      </template>
+    </demo-snippet>
+
   </div>
   <script>
     function validate() {

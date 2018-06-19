@@ -1,11 +1,10 @@
 {
   "name": "@api-components/paper-masked-input",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "license": "Apache-2.0",
   "description": "Material design password field",
   "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.1.1",
-    "bower": "^1.8.0"
+    "@polymer/gen-typescript-declarations": "^1.1.1"
   },
   "scripts": {
     "lint": "polymer lint paper-masked-input.html",
