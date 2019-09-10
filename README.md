@@ -4,6 +4,8 @@
 
 ## &lt;paper-masked-input&gt;
 
+This project is deprecated. Use `@anypoint-web-components/anypoint-input` and `anypoint-masked-input` instead.
+
 `<paper-masked-input>` is a single-line password field with Material Design styling and option to unmask the value.
 
 
